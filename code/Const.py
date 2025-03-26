@@ -8,12 +8,34 @@ COLOR_RED = (255, 0, 0)
 COLOR_BLACK = (0, 0, 0)
 COLOR_WHITE = (255, 255, 255)
 
+# E
+ENTITY_HEALTH = 100
+ENTITY_DAMAGE = 20
+ENTITY_SCORE = 0
+ENTITY_SPEED = {
+    'Level1Bg0': 0,
+    'Level1Bg1': 1,
+    'Level1Bg2': 2,
+    'Level1Bg3': 3,
+    'Level1Bg4': 4,
+    'Level1Bg5': 5,
+    'Level1Bg6': 6
+}
+ENTITY_SHOT_DELAY = 1
+
 # M
 MENU_OPTION = ('NEW GAME 1P',
                'NEW GAME 2P- COOPERATIVE',
                'NEW GAME 2P- COMPETITIVE',
                'SCORE',
                'EXIT')
+
+# P
+PLAYER_KEY_UP = 0
+PLAYER_KEY_DOWN = 1
+PLAYER_KEY_LEFT = 2
+PLAYER_KEY_RIGHT = 3
+PLAYER_KEY_SHOOT = 4
 
 # W
 WIN_WIDTH = 576

@@ -1,4 +1,6 @@
 # C
+import pygame
+
 COLOR_ORANGE = (255, 165, 0)
 COLOR_GREEN = (0, 255, 0)
 COLOR_BLUE = (0, 0, 255)
@@ -9,6 +11,7 @@ COLOR_BLACK = (0, 0, 0)
 COLOR_WHITE = (255, 255, 255)
 
 # E
+EVENT_ENEMY = pygame.USEREVENT + 1
 ENTITY_HEALTH = 100
 ENTITY_DAMAGE = 20
 ENTITY_SCORE = 0
@@ -19,7 +22,11 @@ ENTITY_SPEED = {
     'Level1Bg3': 3,
     'Level1Bg4': 4,
     'Level1Bg5': 5,
-    'Level1Bg6': 6
+    'Level1Bg6': 6,
+    'Player1': 3,
+    'Player2': 3,
+    'Enemy1': 1,
+    'Enemy2': 1
 }
 ENTITY_SHOT_DELAY = 1
 
@@ -31,11 +38,29 @@ MENU_OPTION = ('NEW GAME 1P',
                'EXIT')
 
 # P
-PLAYER_KEY_UP = 0
-PLAYER_KEY_DOWN = 1
-PLAYER_KEY_LEFT = 2
-PLAYER_KEY_RIGHT = 3
-PLAYER_KEY_SHOOT = 4
+PLAYER_KEY_UP = {
+    'Player1': pygame.K_UP,
+    'Player2': pygame.K_w
+}
+PLAYER_KEY_DOWN = {
+    'Player1': pygame.K_DOWN,
+    'Player2': pygame.K_s
+}
+PLAYER_KEY_LEFT = {
+    'Player1': pygame.K_LEFT,
+    'Player2': pygame.K_a
+}
+PLAYER_KEY_RIGHT = {
+    'Player1': pygame.K_RIGHT,
+    'Player2': pygame.K_d
+}
+PLAYER_KEY_SHOOT = {
+    'Player1': pygame.K_RCTRL,
+    'Player2': pygame.K_LCTRL
+}
+
+# S
+SPAWN_TIME = 3000
 
 # W
 WIN_WIDTH = 576

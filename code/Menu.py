@@ -1,17 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import pygame
+import pygame.transform
 from pygame import Surface, Rect
 from pygame.font import Font
 
-from code.Const import WIN_WIDTH, COLOR_ORANGE, MENU_OPTION, COLOR_WHITE, COLOR_YELLOW
+from code.Const import WIN_WIDTH, WIN_HEIGHT, COLOR_ORANGE, MENU_OPTION, COLOR_WHITE, COLOR_YELLOW
 
 
 class Menu:
     def __init__(self, window):
         self.window = window
-        self.surf = pygame.image.load("./asset/MenuBg.png").convert_alpha()
-        self.rect = self.surf.get_rect(left=0, top=0)
+        # Load and scale the background image
+        original_surf = pygame.image.load("./asset/MenuBg.png").convert_alpha()
+        # Scale to fit screen height while maintaining aspect ratio
+        scale_factor = WIN_HEIGHT / original_surf.get_height()
+        new_width = int(original_surf.get_width() * scale_factor)
+        new_height = int(original_surf.get_height() * scale_factor)
+        self.surf = pygame.transform.scale(original_surf, (new_width, new_height))
+        # Center the background horizontally
+        self.rect = self.surf.get_rect(centerx=WIN_WIDTH/2, top=0)
 
     def run(self, ):
         menu_option = 0
@@ -27,7 +35,6 @@ class Menu:
                     self.menu_text(text_size=20, text=MENU_OPTION[i], text_color=COLOR_YELLOW, text_center_pos=((WIN_WIDTH / 2), 170 + 20 * i))
                 else:
                     self.menu_text(text_size=20, text=MENU_OPTION[i], text_color=COLOR_WHITE, text_center_pos=((WIN_WIDTH / 2), 170 + 20 * i))
-
 
             pygame.display.flip()
 
@@ -48,8 +55,6 @@ class Menu:
 
                     if event.key == pygame.K_RETURN:
                         return MENU_OPTION[menu_option]
-
-
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
         text_font: Font = pygame.font.SysFont("Lucida Sans Typewriter", text_size)

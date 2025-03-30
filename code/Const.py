@@ -149,23 +149,23 @@ TIMEOUT_STEP = 100
 TIMEOUT_LEVEL = 10000
 
 # W
-WIN_WIDTH = 576
-WIN_HEIGHT = 324
+WIN_WIDTH = 540
+WIN_HEIGHT = 960
 
 # S
 SCORE_POS = {
-    'Title': (WIN_WIDTH / 2, 50),
-    'EnterName': (WIN_WIDTH / 2, 80),
-    'Label': (WIN_WIDTH / 2, 90),
-    'Name': (WIN_WIDTH / 2, 110),
-    0: (WIN_WIDTH / 2, 110),
-    1: (WIN_WIDTH / 2, 130),
-    2: (WIN_WIDTH / 2, 150),
-    3: (WIN_WIDTH / 2, 170),
-    4: (WIN_WIDTH / 2, 190),
-    5: (WIN_WIDTH / 2, 210),
-    6: (WIN_WIDTH / 2, 230),
-    7: (WIN_WIDTH / 2, 250),
-    8: (WIN_WIDTH / 2, 270),
-    9: (WIN_WIDTH / 2, 290)
+    'Title': (WIN_WIDTH / 2, 80),
+    'EnterName': (WIN_WIDTH / 2, 120),
+    'Label': (WIN_WIDTH / 2, 140),
+    'Name': (WIN_WIDTH / 2, 160),
+    0: (WIN_WIDTH / 2, 160),
+    1: (WIN_WIDTH / 2, 190),
+    2: (WIN_WIDTH / 2, 220),
+    3: (WIN_WIDTH / 2, 250),
+    4: (WIN_WIDTH / 2, 280),
+    5: (WIN_WIDTH / 2, 310),
+    6: (WIN_WIDTH / 2, 340),
+    7: (WIN_WIDTH / 2, 370),
+    8: (WIN_WIDTH / 2, 400),
+    9: (WIN_WIDTH / 2, 430)
 }

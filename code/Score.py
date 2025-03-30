@@ -2,19 +2,26 @@ import sys
 from datetime import datetime
 
 import pygame
+import pygame.transform
 from pygame import Surface, Rect, KEYDOWN, K_RETURN, K_BACKSPACE, K_ESCAPE
 from pygame.font import Font
 
-from code.Const import COLOR_YELLOW, SCORE_POS, MENU_OPTION, COLOR_WHITE
+from code.Const import COLOR_YELLOW, SCORE_POS, MENU_OPTION, COLOR_WHITE, WIN_WIDTH, WIN_HEIGHT
 from code.DBProxy import DBProxy
 
 
 class Score:
     def __init__(self, window: Surface):
         self.window = window
-        self.surf = pygame.image.load('./asset/ScoreBg.png').convert_alpha()
-        self.rect = self.surf.get_rect(left=0, top=0)
-        pass
+        # Load and scale the background image
+        original_surf = pygame.image.load('./asset/ScoreBg.png').convert_alpha()
+        # Scale to fit screen height while maintaining aspect ratio
+        scale_factor = WIN_HEIGHT / original_surf.get_height()
+        new_width = int(original_surf.get_width() * scale_factor)
+        new_height = int(original_surf.get_height() * scale_factor)
+        self.surf = pygame.transform.scale(original_surf, (new_width, new_height))
+        # Center the background horizontally
+        self.rect = self.surf.get_rect(centerx=WIN_WIDTH/2, top=0)
 
     def save(self, game_mode: str, player_score: list[int]):
         pygame.mixer_music.load('./asset/Score.mp3')
@@ -55,7 +62,6 @@ class Score:
                             name += event.unicode
             self.score_text(20, name, COLOR_WHITE, SCORE_POS['Name'])
             pygame.display.flip()
-            pass
 
     def show(self):
         pygame.mixer_music.load('./asset/Score.mp3')

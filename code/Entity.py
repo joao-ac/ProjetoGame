@@ -7,6 +7,13 @@ import pygame.transform
 
 from code.Const import ENTITY_HEALTH, ENTITY_DAMAGE, ENTITY_SCORE, WIN_WIDTH, WIN_HEIGHT
 
+# Scaling factors for different entity types
+SCALE_FACTORS = {
+    'background': 1.0,  # Backgrounds scale to window height
+    'player': 0.05,     # Players are 15% of window height
+    'enemy': 0.05,      # Enemies are 12% of window height
+    'shot': 0.018        # Shots are 5% of window height
+}
 
 class Entity(ABC):
     def __init__(self, name: str, position: tuple):
@@ -14,24 +21,28 @@ class Entity(ABC):
         # Load the original image
         original_surf = pygame.image.load('./asset/' + name + '.png').convert_alpha()
         
-        # Scale the image based on entity type
+        # Determine entity type and apply appropriate scaling
         if name.startswith('Level'):
-            # For background images, scale to window height
+            # Background images scale to window height
             scale_factor = WIN_HEIGHT / original_surf.get_height()
             new_width = int(original_surf.get_width() * scale_factor)
             new_height = int(original_surf.get_height() * scale_factor)
             self.surf = pygame.transform.scale(original_surf, (new_width, new_height))
-        elif 'Shot' in name:
-            # For shots, make them much smaller
-            scale_factor = min(WIN_WIDTH / original_surf.get_width(), WIN_HEIGHT / original_surf.get_height()) * 0.03
-            new_width = int(original_surf.get_width() * scale_factor)
-            new_height = int(original_surf.get_height() * scale_factor)
-            self.surf = pygame.transform.scale(original_surf, (new_width, new_height))
         else:
-            # For other entities (players, enemies), maintain aspect ratio but scale to a reasonable size
-            scale_factor = min(WIN_WIDTH / original_surf.get_width(), WIN_HEIGHT / original_surf.get_height()) * 0.1
-            new_width = int(original_surf.get_width() * scale_factor)
-            new_height = int(original_surf.get_height() * scale_factor)
+            # For other entities, scale based on window height
+            base_scale = WIN_HEIGHT / original_surf.get_height()
+            
+            if 'Shot' in name:
+                scale = base_scale * SCALE_FACTORS['shot']
+            elif name.startswith('Player'):
+                scale = base_scale * SCALE_FACTORS['player']
+            elif name.startswith('Enemy'):
+                scale = base_scale * SCALE_FACTORS['enemy']
+            else:
+                scale = base_scale * SCALE_FACTORS['background']
+                
+            new_width = int(original_surf.get_width() * scale)
+            new_height = int(original_surf.get_height() * scale)
             self.surf = pygame.transform.scale(original_surf, (new_width, new_height))
             
         self.rect = self.surf.get_rect(left=position[0], top=position[1])

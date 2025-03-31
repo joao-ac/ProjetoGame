@@ -24,7 +24,8 @@ class Score:
         self.rect = self.surf.get_rect(centerx=WIN_WIDTH/2, top=0)
 
     def save(self, game_mode: str, player_score: list[int]):
-        pygame.mixer_music.load('./asset/Score.mp3')
+        pygame.mixer_music.load('./asset/Score.wav')
+        pygame.mixer_music.set_volume(1.0)  # Set to maximum volume
         pygame.mixer_music.play(-1)
         db_proxy = DBProxy('DBScore')
         name = ''
@@ -33,17 +34,11 @@ class Score:
             self.score_text(48, 'GAME CLEAR', COLOR_YELLOW, SCORE_POS['Title'])
             text = 'Enter Player 1 name (4 characters):'
             score = player_score[0]
-            if game_mode == MENU_OPTION[0]:
+            if game_mode == MENU_OPTION[0]:  # 1 Player mode
                 score = player_score[0]
-            if game_mode == MENU_OPTION[1]:
-                score = (player_score[0] + player_score[1]) / 2
+            elif game_mode == MENU_OPTION[1]:  # 2 Player cooperative mode
+                score = player_score[0]  # Both players share the same score
                 text = 'Enter Team name (4 characters):'
-            if game_mode == MENU_OPTION[2]:
-                if player_score[0] >= player_score[1]:
-                    score = player_score[0]
-                else:
-                    score = player_score[1]
-                    text = 'Enter Player 2 name (4 characters):'
             self.score_text(20, text, COLOR_WHITE, SCORE_POS['EnterName'])
 
             for event in pygame.event.get():
@@ -64,7 +59,8 @@ class Score:
             pygame.display.flip()
 
     def show(self):
-        pygame.mixer_music.load('./asset/Score.mp3')
+        pygame.mixer_music.load('./asset/Score.wav')
+        pygame.mixer_music.set_volume(1.0)  # Set to maximum volume
         pygame.mixer_music.play(-1)
         self.window.blit(source=self.surf, dest=self.rect)
         self.score_text(48, 'TOP 10 SCORE', COLOR_YELLOW, SCORE_POS['Title'])
@@ -88,7 +84,18 @@ class Score:
             pygame.display.flip()
 
     def score_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
-        text_font: Font = pygame.font.SysFont(name="Lucida Sans Typewriter", size=text_size)
+        text_font: Font = pygame.font.SysFont(name="Segoe UI", size=text_size, bold=True)
+        
+        # Create shadow effect
+        shadow_color = (0, 0, 0)  # Black shadow
+        shadow_offset = 2
+        
+        # Render shadow
+        shadow_surf: Surface = text_font.render(text, True, shadow_color).convert_alpha()
+        shadow_rect: Rect = shadow_surf.get_rect(center=(text_center_pos[0] + shadow_offset, text_center_pos[1] + shadow_offset))
+        self.window.blit(source=shadow_surf, dest=shadow_rect)
+        
+        # Render main text
         text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
         text_rect: Rect = text_surf.get_rect(center=text_center_pos)
         self.window.blit(source=text_surf, dest=text_rect)
